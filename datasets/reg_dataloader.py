@@ -39,7 +39,7 @@ class OCRDataset(Dataset):
         labels = []
         label_names = os.listdir(label_path)
         label_paths = [os.path.join(label_path, file_name) for file_name in label_names]
-        image_paths = [lp.replace('txt', 'jpg') for lp in label_paths]
+        image_paths = [os.path.join(image_path, file_name.replace('txt', 'jpg')) for file_name in label_names]
         for la_path, im_path in zip(label_paths, image_paths):
             with open(la_path, 'rb') as file:
                 temp_lins = file.readlines()
