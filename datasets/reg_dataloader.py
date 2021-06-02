@@ -110,7 +110,7 @@ class OCRDataset(Dataset):
                 if (image.max() - image.min()) < 64:
                     image = normalize(image)
                 if (not self.val) and random.random() <= 0.7:
-                    aug_ind = random.randint(0, 6)
+                    aug_ind = random.randint(0, 5)
                     if aug_ind == 0:
                         sigma = random.uniform(0.01, 0.04)
                         image = pepper_and_salt(image, sigma)
@@ -121,8 +121,8 @@ class OCRDataset(Dataset):
                         image = gaussian_blur(image, sigma)
                     elif aug_ind == 3:
                         image = random_erode(image)
-                    elif aug_ind == 4:
-                        image = scan(image)
+                    # elif aug_ind == 4:
+                    #     image = scan(image)
                     # elif aug_ind == 5:
                     #     image = random_crop(image)
                     else:
