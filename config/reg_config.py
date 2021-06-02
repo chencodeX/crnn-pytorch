@@ -3,7 +3,7 @@
 # Copyright (c) 2021 - zihao.chen
 '''
 @Author : zihao.chen
-@File : reg_config.py 
+@File : reg_config.py
 @Create Date : 2021/6/2
 @Descirption :
 '''
@@ -15,7 +15,7 @@ char_dir = "./datas/crnn/chars.txt"
 resume_dir = ''
 model_flag = 'crnn_dynamic_model_0601'
 experiment = './base_info_expr'
-data_base_path = "/data2/zihao.chen/data/train_data/recognition"
+data_base_path = "/datafaster/zihao.chen/data/train_data/recognition"
 
 alphabet = None
 random_sample = True
