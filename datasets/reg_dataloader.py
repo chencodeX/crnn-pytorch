@@ -158,7 +158,7 @@ if __name__ == '__main__':
     label_paths = "/datafaster/zihao.chen/data/train_data/recognition/labels"
     im_dir = []
     label_dir = []
-    dataset = OCRDataset(im_dir, label_dir, (reg_config.imgH, reg_config.imgW), val=False,
+    dataset = OCRDataset(img_roots, label_paths, (reg_config.imgH, reg_config.imgW), val=False,
                          dynamic=True)
     data_loader = DataLoader(dataset, batch_size=32, shuffle=False, num_workers=8)
 
