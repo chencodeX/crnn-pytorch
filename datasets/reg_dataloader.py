@@ -95,7 +95,7 @@ class OCRDataset(Dataset):
 
     def __getitem__(self, ind):
         while True:
-            try:
+            # try:
 
                 image_name = list(self.labels[ind].keys())[0]
                 image = cv2.imread(image_name)
@@ -140,13 +140,13 @@ class OCRDataset(Dataset):
                 elif self.mode == 3:
                     image, seq_len = self.ocr_dynamic_preprocess(image, self.width, self.height)
                     return image, seq_len, ind
-            except Exception as e:
-                print('image error :', self.labels[ind])
-                print(e)
-                ind += 1
-                ind = ind % len(self.labels)
-                continue
-            return image, ind
+            # except Exception as e:
+            #     print('image error :', self.labels[ind])
+            #     print(e)
+            #     ind += 1
+            #     ind = ind % len(self.labels)
+            #     continue
+                return image, ind
 
 
 if __name__ == '__main__':
