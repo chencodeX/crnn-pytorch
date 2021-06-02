@@ -28,6 +28,7 @@ class OCRDataset(Dataset):
         super(OCRDataset, self).__init__()
         self.labels = self.get_labels(label_path, img_root)
         self.height, self.width = resize
+        self.val = val
         if dynamic:
             self.mode = 3
         else:
