@@ -88,7 +88,7 @@ class OCRDataset(Dataset):
                 img = cv2.copyMakeBorder(img, 0, 0, 0, w - nw, cv2.BORDER_CONSTANT, value=[255, 255, 255])
             else:
                 img = cv2.copyMakeBorder(img, 0, 0, 0, w - nw, cv2.BORDER_CONSTANT, value=[0, 0, 0])
-        img = (np.reshape(img, (32, w, 1))).transpose(2, 0, 1)
+        img = (np.reshape(img, (32, w, 3))).transpose(2, 0, 1)
         seq_len = math.ceil(nw / 4)
         img = self.pre_processing(img)
         return img, seq_len
