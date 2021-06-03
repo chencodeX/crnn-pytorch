@@ -220,7 +220,7 @@ if __name__ == '__main__':
         # pretrained_dict.pop("rnn.1.embedding.1.bias")
         # model_dict = crnn.state_dict()
         # model_dict.update(pretrained_dict)
-        crnn.load_state_dict(pretrained_dict)
+        crnn.load_state_dict(pretrained_dict,strict=False)
 
     # data loader process
     img_roots = "/datafaster/zihao.chen/data/train_data/recognition/imgs"
