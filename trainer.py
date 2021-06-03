@@ -225,7 +225,7 @@ if __name__ == '__main__':
         crnn.lstm_r.lstm_2.embedding = nn.Sequential(
             nn.Dropout(0.5),
             nn.Linear(reg_config.nh * 2, 6894))
-        crnn.load_state_dict(pretrained_dict,strict=False)
+        crnn.load_state_dict(pretrained_dict, strict=False)
         crnn.lstm_r.lstm_2.embedding = nn.Sequential(
             nn.Dropout(0.5),
             nn.Linear(reg_config.nh * 2, 1911))
@@ -242,9 +242,9 @@ if __name__ == '__main__':
 
     # read train set
     dataset_bucket_train = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW),
-                                      batch_size=reg_config.batchSize, dynamic=True)
-    dataset_bucket_val = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW),
-                                    batch_size=reg_config.val_batchSize, val=True, dynamic=True)
+                                      dynamic=True)
+    dataset_bucket_val = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW), val=True,
+                                    dynamic=True)
 
     loader_bucket_train = DataLoader(dataset_bucket_train, batch_size=reg_config.batchSize, shuffle=False,
                                      num_workers=reg_config.workers)
