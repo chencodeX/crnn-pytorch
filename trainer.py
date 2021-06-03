@@ -125,7 +125,7 @@ def train(crnn, train_loader, criterion, iteration, optimizer, warm_up=False):
             writer.add_scalar('Train Loss', loss_avg.val(), iteration * len(train_loader) + i_batch)
             loss_avg.reset()
 
-        if (i_batch + 2) % 10000 == 0:
+        if (i_batch + 2) % 1000 == 0:
             torch.save(crnn.state_dict(), '{0}/{1}_{2}_{3}_{4}.pth'.
                        format(reg_config.experiment, reg_config.model_flag, iteration, i_batch, loss_avg.val()))
         i_batch += 1
