@@ -16,9 +16,8 @@ import numpy as np
 import cv2
 import os
 import random
-from selene.model.crnn.utils.ctcdecode import be_decode
-from selene.model.crnn.utils.tools_wordmap import get_map
-import selene.model.crnn.reg_config as params
+from models.ctcdecode import be_decode
+import config.reg_config as params
 from torchvision.transforms import transforms
 
 
