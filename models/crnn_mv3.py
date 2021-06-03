@@ -130,8 +130,8 @@ class MobileNetV3_Small(nn.Module):
     def __init__(self):
         super(MobileNetV3_Small, self).__init__()
 
-        self.conv1_3x3 = nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1, bias=False)
-        self.conv1_5x5 = nn.Conv2d(3, 16, kernel_size=5, stride=2, padding=2, bias=False)
+        self.conv1_3x3_3 = nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1, bias=False)
+        self.conv1_5x5_3 = nn.Conv2d(3, 16, kernel_size=5, stride=2, padding=2, bias=False)
 
         self.bn1 = nn.BatchNorm2d(32)
         self.hs1 = hswish()

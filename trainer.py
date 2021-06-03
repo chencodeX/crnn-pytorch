@@ -11,6 +11,8 @@ from __future__ import print_function
 from torch.utils.data import DataLoader
 import random
 import torch
+import torch.nn as nn
+from torch.nn import init
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR
@@ -220,7 +222,16 @@ if __name__ == '__main__':
         # pretrained_dict.pop("rnn.1.embedding.1.bias")
         # model_dict = crnn.state_dict()
         # model_dict.update(pretrained_dict)
+        crnn.lstm_r.lstm_2.embedding = nn.Sequential(
+            nn.Dropout(0.5),
+            nn.Linear(reg_config.nh * 2, 6894))
         crnn.load_state_dict(pretrained_dict,strict=False)
+        crnn.lstm_r.lstm_2.embedding = nn.Sequential(
+            nn.Dropout(0.5),
+            nn.Linear(reg_config.nh * 2, 1911))
+
+        init.normal_(crnn.lstm_r.lstm_2.embedding.weight, std=0.001)
+        init.constant_(crnn.lstm_r.lstm_2.embedding.bias, 0)
 
     # data loader process
     img_roots = "/datafaster/zihao.chen/data/train_data/recognition/imgs"
