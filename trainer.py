@@ -223,26 +223,16 @@ if __name__ == '__main__':
         crnn.load_state_dict(pretrained_dict)
 
     # data loader process
-    im_dir = []
-    label_dir = []
-    fi_list = os.listdir(reg_config.data_base_path)
-    for fi in fi_list:
-        if ".txt" not in fi:
-            tmp_im_dir = reg_config.data_base_path + "/" + fi
-            tmp_label_dir = reg_config.data_base_path + "/" + fi + ".txt"
-            im_dir.append(tmp_im_dir)
-            label_dir.append(tmp_label_dir)
-
-    # im_dir.append("/data/caiqiuyu/project/selene/sample_tools/sample/crnn/Train/")
-    # label_dir.append("/data/caiqiuyu/project/selene/sample_tools/sample/crnn/sample_train_all.txt")
+    img_roots = "/datafaster/zihao.chen/data/train_data/recognition/imgs"
+    label_paths = "/datafaster/zihao.chen/data/train_data/recognition/labels"
 
     # store model path
     utils.mk_not_exits_dir(reg_config.experiment)
 
     # read train set
-    dataset_bucket_train = OCRDataset(im_dir, label_dir, alphabet, (reg_config.imgH, reg_config.imgW),
+    dataset_bucket_train = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW),
                                       batch_size=reg_config.batchSize, dynamic=True)
-    dataset_bucket_val = OCRDataset(im_dir, label_dir, alphabet, (reg_config.imgH, reg_config.imgW),
+    dataset_bucket_val = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW),
                                     batch_size=reg_config.val_batchSize, val=True, dynamic=True)
 
     loader_bucket_train = DataLoader(dataset_bucket_train, batch_size=reg_config.batchSize, shuffle=False,
