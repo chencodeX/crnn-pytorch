@@ -44,7 +44,7 @@ class strLabelConverter(object):
             # NOTE: 0 is reserved for 'blank' required by wrap_ctc
             self.dict[char] = i + 1
         self.alphabet.append('-')  # for `-1` index
-        self.map_dict = get_map()
+        # self.map_dict = get_map()
 
     def encode(self, text, map_flag=False):
         """Support batch or single str.
@@ -71,18 +71,15 @@ class strLabelConverter(object):
                     index = self.dict[char]
                     result.append(index)
                 else:
-                    if map_flag:
-                        if char in self.map_dict:
-                            char = self.map_dict[char]
-                            if char in self.dict:
-                                index = self.dict[char]
-                                result.append(index)
-                            else:
-                                result.append(self.dict[' '])
-                        else:
-                            result.append(self.dict[' '])
-                    else:
-                        result.append(self.dict[' '])
+                    # Who wrote this rubbish code?
+                    # if map_flag:
+                    #     if char in self.dict:
+                    #         index = self.dict[char]
+                    #         result.append(index)
+                    #     else:
+                    #         result.append(self.dict[' '])
+                    # else:
+                    result.append(self.dict[' '])
         text = result
         return torch.IntTensor(text), torch.IntTensor(length)
 
