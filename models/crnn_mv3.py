@@ -137,14 +137,14 @@ class MobileNetV3_Small(nn.Module):
         self.hs1 = hswish()
 
         self.bneck = nn.Sequential(
-            Block(3, 32, 32, 32, nn.ReLU(inplace=True), SeModule(32), (1, 2)),
+            Block(3, 32, 32, 32, nn.ReLU(inplace=True), SeModule(32), (2,1)),
             Block(3, 32, 72, 40, nn.ReLU(inplace=True), None, 1),
-            Block(3, 40, 120, 40, nn.ReLU(inplace=True), None, (1, 2)),
+            Block(3, 40, 120, 40, nn.ReLU(inplace=True), None, (2,1)),
             Block(5, 40, 240, 80, hswish(), SeModule(80), 1),
             Block(5, 80, 200, 80, hswish(), SeModule(80), 1),
             Block(5, 80, 240, 80, hswish(), SeModule(80), 2),
             Block(5, 80, 184, 80, hswish(), SeModule(80), 1),
-            Block(5, 80, 480, 112, hswish(), SeModule(112), (1, 2)),
+            Block(5, 80, 480, 112, hswish(), SeModule(112), (2,1)),
             Block(5, 112, 672, 160, hswish(), SeModule(160), 1),
             Block(5, 160, 672, 320, hswish(), SeModule(320), 1),
             Block(5, 320, 960, 480, hswish(), SeModule(480), 1),
