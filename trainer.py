@@ -81,7 +81,7 @@ def val(crnn, val_loader, data_set, criterion, iteration):
 
         raw_preds = converter.decode(preds.data, preds_size.data, raw=True)[:reg_config.n_test_disp]
         for raw_pred, pred, gt in zip(raw_preds, sim_preds, label):
-            print('%-20s => %-20s, gt: %-20s' % (raw_pred, pred, gt))
+            print('%-10s => %-10s, gt: %-10s' % (raw_pred, pred, gt))
 
         print(n_correct)
         sum_number = reg_config.val_batchSize * reg_config.val_number
@@ -155,7 +155,7 @@ def adjust_learning_rate(optimizer, epoch, warmup=False, batch_idx=10000):
         else:
             return
     else:
-        lr_ = reg_config.lr * (0.5 ** (epoch // 5))
+        lr_ = reg_config.lr * (0.5 ** (epoch // 10))
         lr_ = max(lr_, 0.00001)
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr_
