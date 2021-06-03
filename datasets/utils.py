@@ -71,7 +71,7 @@ class strLabelConverter(object):
                     index = self.dict[char]
                     result.append(index)
                 else:
-                    # Who wrote this rubbish code?
+                    # Who wrote this rubbish code ?
                     # if map_flag:
                     #     if char in self.dict:
                     #         index = self.dict[char]
