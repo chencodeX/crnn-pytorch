@@ -239,6 +239,7 @@ class CRNN_Head(nn.Module):
 
     def forward(self, x, seq_lens=None):
         b, c, h, w = x.size()
+        print(x.size())
         # assert h == 1, "the height of conv must be 1"
 
         x = self.attention(x)
