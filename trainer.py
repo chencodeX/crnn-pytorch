@@ -230,8 +230,8 @@ if __name__ == '__main__':
             nn.Dropout(0.5),
             nn.Linear(reg_config.nh * 2, 1911))
 
-        init.normal_(crnn.lstm_r.lstm_2.embedding.weight, std=0.001)
-        init.constant_(crnn.lstm_r.lstm_2.embedding.bias, 0)
+        init.normal_(crnn.lstm_r.lstm_2.embedding[1].weight, std=0.001)
+        init.constant_(crnn.lstm_r.lstm_2.embedding[1].bias, 0)
 
     # data loader process
     img_roots = "/datafaster/zihao.chen/data/train_data/recognition/imgs"
