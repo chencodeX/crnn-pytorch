@@ -250,7 +250,7 @@ if __name__ == '__main__':
     loader_bucket_val = DataLoader(dataset_bucket_val, batch_size=reg_config.val_batchSize, shuffle=False,
                                    num_workers=reg_config.workers)
 
-    converter = utils.strLabelConverter(dataset_bucket_train.alphabet)
+    converter = utils.strLabelConverter(alphabet)
     print("network class: {0}".format(nclass))
     criterion = torch.nn.CTCLoss(reduction='sum')
 
