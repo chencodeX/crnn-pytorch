@@ -167,8 +167,8 @@ class MobileNetV3_Small(nn.Module):
                     init.constant_(m.bias, 0)
 
     def forward(self, x):
-        x1 = self.conv1_3x3(x)
-        x2 = self.conv1_5x5(x)
+        x1 = self.conv1_3x3_3(x)
+        x2 = self.conv1_5x5_3(x)
         x = torch.cat((x1, x2), dim=1)
         out = self.hs1(self.bn1(x))
         out = self.bneck(out)
