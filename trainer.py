@@ -155,7 +155,7 @@ def adjust_learning_rate(optimizer, epoch, warmup=False, batch_idx=10000):
         else:
             return
     else:
-        lr_ = reg_config.lr * (0.5 ** (epoch // 3))
+        lr_ = reg_config.lr * (0.5 ** (epoch // 5))
         lr_ = max(lr_, 0.00001)
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr_
