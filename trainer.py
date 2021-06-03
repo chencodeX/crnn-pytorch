@@ -241,10 +241,9 @@ if __name__ == '__main__':
     utils.mk_not_exits_dir(reg_config.experiment)
 
     # read train set
-    dataset_bucket_train = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW),
+    dataset_bucket_train = OCRDataset(img_roots, label_paths, (reg_config.imgH, reg_config.imgW),
                                       dynamic=True)
-    dataset_bucket_val = OCRDataset(img_roots, label_paths, alphabet, (reg_config.imgH, reg_config.imgW), val=True,
-                                    dynamic=True)
+    dataset_bucket_val = OCRDataset(img_roots, label_paths, (reg_config.imgH, reg_config.imgW), val=True, dynamic=True)
 
     loader_bucket_train = DataLoader(dataset_bucket_train, batch_size=reg_config.batchSize, shuffle=False,
                                      num_workers=reg_config.workers)
