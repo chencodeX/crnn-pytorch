@@ -75,7 +75,7 @@ class OCRDataset(Dataset):
         img = torch.from_numpy(img).type(torch.FloatTensor)
         # print(img.size())
         img.sub_(reg_config.mean).div_(reg_config.std)
-        return img.transpose(2, 0, 1)
+        return img.permute(2, 0, 1)
 
     def ocr_preprocess(self, img, w, h):
         ih, iw = img.shape[0:2]
