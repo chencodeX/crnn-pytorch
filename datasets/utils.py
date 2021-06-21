@@ -391,6 +391,7 @@ def read_alphabet(path):
     with open(path, 'r', encoding='utf-8') as fr:
         for line in fr:
             alphabet.append(line.strip("\n"))
+    print(alphabet[:10])
     return alphabet
 
 
