@@ -56,7 +56,7 @@ class OCRDataset(Dataset):
         # label_paths = [os.path.join(label_path, file_name) for file_name in label_names]
         # image_paths = [os.path.join(image_path, file_name.replace('txt', 'jpg')) for file_name in label_names]
         # for la_path, im_path in zip(label_paths, image_paths):
-        img_index = 0
+        img_index = 1
         with open(label_path, 'rb') as file:
             temp_lins = file.readlines()
             for line in temp_lins:
