@@ -114,6 +114,7 @@ class OCRDataset(Dataset):
             # try:
 
             image_name = list(self.labels[ind].keys())[0]
+            print(image_name)
             image = cv2.imread(image_name)
             h, w, c = image.shape
             # if h > w:
