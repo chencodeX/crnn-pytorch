@@ -73,6 +73,7 @@ class OCRDataset(Dataset):
         # already have been computed
         img = img.astype(np.float32) / 255.
         img = torch.from_numpy(img).type(torch.FloatTensor)
+        print(img.size())
         img.sub_(reg_config.mean).div_(reg_config.std)
         return img
 
