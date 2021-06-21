@@ -274,6 +274,7 @@ class CRNN(nn.Module):
 
     def forward(self, x, seq_lens=None):
         x = self.cnn_bo(x)
+        print(x.size())
         if self.dynamic:
             x = self.lstm_r(x, seq_lens)
         else:
