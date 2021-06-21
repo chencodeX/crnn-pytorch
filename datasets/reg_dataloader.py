@@ -45,7 +45,7 @@ class OCRDataset(Dataset):
             with open(la_path, 'rb') as file:
                 temp_lins = file.readlines()
                 for line in temp_lins:
-                    word = line.decode('utf-8').strip('\n')
+                    word = line.decode('utf-8').strip('\n').strip('\r')
                     labels.append({im_path: word})
         return labels
 
