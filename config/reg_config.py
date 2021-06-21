@@ -7,6 +7,7 @@
 @Create Date : 2021/6/2
 @Descirption :
 '''
+import torch
 import numpy as np
 
 manualSeed = 24
@@ -46,6 +47,6 @@ batchSize = 52
 workers = 8
 # std = 0.193
 # mean = 0.588
-std = np.array([0.16319881, 0.14354597, 0.13519511])
-mean = np.array([0.46323372, 0.54948276, 0.61660614])
+std = torch.tensor([0.16319881, 0.14354597, 0.13519511])
+mean = torch.tensor([0.46323372, 0.54948276, 0.61660614])
 dynamic = True
