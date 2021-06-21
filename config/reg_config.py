@@ -12,7 +12,7 @@ import numpy as np
 
 manualSeed = 24
 log_dir = "./logging"
-char_dir = "./datasets/chars_25.txt"
+char_dir = "./datasets/chars_simple_25.txt"
 # resume_dir = './base_info_expr/crnn_dynamic_model_0208_new_6_0.93200625.pth'
 resume_dir = ''
 model_flag = 'crnn_dynamic_model_0621'
