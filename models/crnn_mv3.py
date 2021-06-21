@@ -273,9 +273,9 @@ class CRNN(nn.Module):
         self.dynamic = dynamic
 
     def forward(self, x, seq_lens=None):
-        print('=='*10)
+        # print('=='*10)
         x = self.cnn_bo(x)
-        print(x.size())
+        # print(x.size())
         if self.dynamic:
             x = self.lstm_r(x, seq_lens)
         else:

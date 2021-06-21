@@ -37,20 +37,20 @@ class BidirectionalLSTM(nn.Module):
             # else:
             #     packed_seqs = pack_padded_sequence(input, seq_lens, enforce_sorted=False)
             out_dynamic, _ = self.rnn(packed_seqs)
-            print(out_dynamic.data.size())
+            # print(out_dynamic.data.size())
             recurrent, lens = pad_packed_sequence(out_dynamic)
 
         else:
             recurrent, _ = self.rnn(input)
 
         T, b, h = recurrent.size()
-        print(recurrent.size())
+        # print(recurrent.size())
         t_rec = recurrent.view(T * b, h)
-        print(t_rec.size())
+        # print(t_rec.size())
         output = self.embedding(t_rec)  # [T * b, nOut]
-        print(output.size())
+        # print(output.size())
         output = output.view(T, b, -1)
-        print(output.size())
+        # print(output.size())
         return output
 
 
