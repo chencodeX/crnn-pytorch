@@ -111,58 +111,58 @@ class OCRDataset(Dataset):
 
     def __getitem__(self, ind):
         while True:
-            # try:
+            try:
 
-            image_name = list(self.labels[ind].keys())[0]
-            print(image_name)
-            image = cv2.imread(image_name)
-            h, w, c = image.shape
-            # if h > w:
-            image = image.transpose((1, 0, 2))
-            if image is None:
-                print(self.labels[ind])
+                image_name = list(self.labels[ind].keys())[0]
+                # print(image_name)
+                image = cv2.imread(image_name)
+                h, w, c = image.shape
+                # if h > w:
+                image = image.transpose((1, 0, 2))
+                if image is None:
+                    print(self.labels[ind])
+                    ind += 1
+                    ind = ind % len(self.labels)
+                    continue
+                if (image.max() - image.min()) < 64:
+                    image = normalize(image)
+                if (not self.val) and random.random() <= 0.7:
+                    aug_ind = random.randint(0, 5)
+                    if aug_ind == 0:
+                        sigma = random.uniform(0.01, 0.04)
+                        image = pepper_and_salt(image, sigma)
+                    elif aug_ind == 1:
+                        image = sharpening(image)
+                    elif aug_ind == 2:
+                        sigma = random.uniform(0.5, 1.2)
+                        image = gaussian_blur(image, sigma)
+                    elif aug_ind == 3:
+                        image = random_erode(image)
+                    # elif aug_ind == 4:
+                    #     image = scan(image)
+                    # elif aug_ind == 5:
+                    #     image = random_crop(image)
+                    else:
+                        # image = laplacian_sharpen(image)
+                        image = random_invert(image)
+
+                if self.mode == 1:
+                    h, w = image.shape
+                    image = cv2.resize(image, (0, 0), fx=self.width / w, fy=self.height / h,
+                                       interpolation=cv2.INTER_CUBIC)
+                    image = (np.reshape(image, (32, self.width, 1))).transpose(2, 0, 1)
+                    image = self.pre_processing(image)
+                elif self.mode == 2:
+                    image = self.ocr_preprocess(image, self.width, self.height)
+                elif self.mode == 3:
+                    image, seq_len = self.ocr_dynamic_preprocess(image, self.width, self.height)
+                    return image, seq_len, ind
+            except Exception as e:
+                print('image error :', self.labels[ind])
+                print(e)
                 ind += 1
                 ind = ind % len(self.labels)
                 continue
-            if (image.max() - image.min()) < 64:
-                image = normalize(image)
-            if (not self.val) and random.random() <= 0.7:
-                aug_ind = random.randint(0, 5)
-                if aug_ind == 0:
-                    sigma = random.uniform(0.01, 0.04)
-                    image = pepper_and_salt(image, sigma)
-                elif aug_ind == 1:
-                    image = sharpening(image)
-                elif aug_ind == 2:
-                    sigma = random.uniform(0.5, 1.2)
-                    image = gaussian_blur(image, sigma)
-                elif aug_ind == 3:
-                    image = random_erode(image)
-                # elif aug_ind == 4:
-                #     image = scan(image)
-                # elif aug_ind == 5:
-                #     image = random_crop(image)
-                else:
-                    # image = laplacian_sharpen(image)
-                    image = random_invert(image)
-
-            if self.mode == 1:
-                h, w = image.shape
-                image = cv2.resize(image, (0, 0), fx=self.width / w, fy=self.height / h,
-                                   interpolation=cv2.INTER_CUBIC)
-                image = (np.reshape(image, (32, self.width, 1))).transpose(2, 0, 1)
-                image = self.pre_processing(image)
-            elif self.mode == 2:
-                image = self.ocr_preprocess(image, self.width, self.height)
-            elif self.mode == 3:
-                image, seq_len = self.ocr_dynamic_preprocess(image, self.width, self.height)
-                return image, seq_len, ind
-            # except Exception as e:
-            #     print('image error :', self.labels[ind])
-            #     print(e)
-            #     ind += 1
-            #     ind = ind % len(self.labels)
-            #     continue
             return image, ind
 
 
