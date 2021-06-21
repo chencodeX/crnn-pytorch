@@ -73,9 +73,9 @@ class OCRDataset(Dataset):
         # already have been computed
         img = img.astype(np.float32) / 255.
         img = torch.from_numpy(img).type(torch.FloatTensor)
-        print(img.size())
+        # print(img.size())
         img.sub_(reg_config.mean).div_(reg_config.std)
-        return img
+        return img.transpose(2, 0, 1)
 
     def ocr_preprocess(self, img, w, h):
         ih, iw = img.shape[0:2]
@@ -105,7 +105,7 @@ class OCRDataset(Dataset):
                 img = cv2.copyMakeBorder(img, 0, 0, 0, w - nw, cv2.BORDER_CONSTANT, value=[255, 255, 255])
             else:
                 img = cv2.copyMakeBorder(img, 0, 0, 0, w - nw, cv2.BORDER_CONSTANT, value=[0, 0, 0])
-        img = (np.reshape(img, (32, w, 3))).transpose(2, 0, 1)
+        img = (np.reshape(img, (32, w, 3)))
         seq_len = math.ceil(nw / 4)
         img = self.pre_processing(img)
         return img, seq_len
