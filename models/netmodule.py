@@ -44,8 +44,9 @@ class BidirectionalLSTM(nn.Module):
             recurrent, _ = self.rnn(input)
 
         T, b, h = recurrent.size()
+        print(recurrent.size())
         t_rec = recurrent.view(T * b, h)
-
+        print(t_rec.size())
         output = self.embedding(t_rec)  # [T * b, nOut]
         print(output.size())
         output = output.view(T, b, -1)
