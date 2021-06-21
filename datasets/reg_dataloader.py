@@ -26,7 +26,7 @@ from datasets.tools.data_augument import pepper_and_salt, sharpening, gaussian_b
 class OCRDataset(Dataset):
     def __init__(self, img_root, label_path, resize, val=False, dynamic=False):
         super(OCRDataset, self).__init__()
-        self.labels = self.get_labels(label_path, img_root)
+        self.labels = self.get_labels_new(label_path, img_root)
         self.height, self.width = resize
         self.val = val
         if dynamic:
@@ -45,8 +45,24 @@ class OCRDataset(Dataset):
             with open(la_path, 'rb') as file:
                 temp_lins = file.readlines()
                 for line in temp_lins:
-                    word = line.decode('gb18030').strip('\n')
+                    word = line.decode('utf-8').strip('\n')
                     labels.append({im_path: word})
+        return labels
+
+    @staticmethod
+    def get_labels_new(label_path, image_path):
+        labels = []
+        # label_names = os.listdir(label_path)
+        # label_paths = [os.path.join(label_path, file_name) for file_name in label_names]
+        # image_paths = [os.path.join(image_path, file_name.replace('txt', 'jpg')) for file_name in label_names]
+        # for la_path, im_path in zip(label_paths, image_paths):
+        img_index = 0
+        with open(label_path, 'rb') as file:
+            temp_lins = file.readlines()
+            for line in temp_lins:
+                word = line.decode('utf-8').strip('\n')
+                labels.append({os.path.join(image_path, '%06d.jpg' % (img_index)): word})
+                img_index += 1
         return labels
 
     def __len__(self):
@@ -97,56 +113,56 @@ class OCRDataset(Dataset):
         while True:
             # try:
 
-                image_name = list(self.labels[ind].keys())[0]
-                image = cv2.imread(image_name)
-                h, w, c = image.shape
-                # if h > w:
-                image = image.transpose((1, 0, 2))
-                if image is None:
-                    print(self.labels[ind])
-                    ind += 1
-                    ind = ind % len(self.labels)
-                    continue
-                if (image.max() - image.min()) < 64:
-                    image = normalize(image)
-                if (not self.val) and random.random() <= 0.7:
-                    aug_ind = random.randint(0, 5)
-                    if aug_ind == 0:
-                        sigma = random.uniform(0.01, 0.04)
-                        image = pepper_and_salt(image, sigma)
-                    elif aug_ind == 1:
-                        image = sharpening(image)
-                    elif aug_ind == 2:
-                        sigma = random.uniform(0.5, 1.2)
-                        image = gaussian_blur(image, sigma)
-                    elif aug_ind == 3:
-                        image = random_erode(image)
-                    # elif aug_ind == 4:
-                    #     image = scan(image)
-                    # elif aug_ind == 5:
-                    #     image = random_crop(image)
-                    else:
-                        # image = laplacian_sharpen(image)
-                        image = random_invert(image)
+            image_name = list(self.labels[ind].keys())[0]
+            image = cv2.imread(image_name)
+            h, w, c = image.shape
+            # if h > w:
+            image = image.transpose((1, 0, 2))
+            if image is None:
+                print(self.labels[ind])
+                ind += 1
+                ind = ind % len(self.labels)
+                continue
+            if (image.max() - image.min()) < 64:
+                image = normalize(image)
+            if (not self.val) and random.random() <= 0.7:
+                aug_ind = random.randint(0, 5)
+                if aug_ind == 0:
+                    sigma = random.uniform(0.01, 0.04)
+                    image = pepper_and_salt(image, sigma)
+                elif aug_ind == 1:
+                    image = sharpening(image)
+                elif aug_ind == 2:
+                    sigma = random.uniform(0.5, 1.2)
+                    image = gaussian_blur(image, sigma)
+                elif aug_ind == 3:
+                    image = random_erode(image)
+                # elif aug_ind == 4:
+                #     image = scan(image)
+                # elif aug_ind == 5:
+                #     image = random_crop(image)
+                else:
+                    # image = laplacian_sharpen(image)
+                    image = random_invert(image)
 
-                if self.mode == 1:
-                    h, w = image.shape
-                    image = cv2.resize(image, (0, 0), fx=self.width / w, fy=self.height / h,
-                                       interpolation=cv2.INTER_CUBIC)
-                    image = (np.reshape(image, (32, self.width, 1))).transpose(2, 0, 1)
-                    image = self.pre_processing(image)
-                elif self.mode == 2:
-                    image = self.ocr_preprocess(image, self.width, self.height)
-                elif self.mode == 3:
-                    image, seq_len = self.ocr_dynamic_preprocess(image, self.width, self.height)
-                    return image, seq_len, ind
+            if self.mode == 1:
+                h, w = image.shape
+                image = cv2.resize(image, (0, 0), fx=self.width / w, fy=self.height / h,
+                                   interpolation=cv2.INTER_CUBIC)
+                image = (np.reshape(image, (32, self.width, 1))).transpose(2, 0, 1)
+                image = self.pre_processing(image)
+            elif self.mode == 2:
+                image = self.ocr_preprocess(image, self.width, self.height)
+            elif self.mode == 3:
+                image, seq_len = self.ocr_dynamic_preprocess(image, self.width, self.height)
+                return image, seq_len, ind
             # except Exception as e:
             #     print('image error :', self.labels[ind])
             #     print(e)
             #     ind += 1
             #     ind = ind % len(self.labels)
             #     continue
-                return image, ind
+            return image, ind
 
 
 if __name__ == '__main__':
@@ -155,7 +171,7 @@ if __name__ == '__main__':
     np.random.seed(reg_config.manualSeed)
     torch.manual_seed(reg_config.manualSeed)
 
-    img_roots = "/datafaster/zihao.chen/data/train_data/recognition/imgs"
+    img_roots = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set"
     label_paths = "/datafaster/zihao.chen/data/train_data/recognition/labels"
     im_dir = []
     label_dir = []

@@ -238,8 +238,8 @@ if __name__ == '__main__':
         init.constant_(crnn.lstm_r.lstm_2.embedding[1].bias, 0)
 
     # data loader process
-    img_roots = "/datafaster/zihao.chen/data/train_data/recognition/imgs"
-    label_paths = "/datafaster/zihao.chen/data/train_data/recognition/labels"
+    img_roots = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set"
+    label_paths = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/label_txt.txt"
 
     # store model path
     utils.mk_not_exits_dir(reg_config.experiment)
