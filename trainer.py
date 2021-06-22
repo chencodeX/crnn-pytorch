@@ -239,7 +239,7 @@ if __name__ == '__main__':
 
     # data loader process
     # img_roots = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set"
-    img_roots = '/data2/zihao.chen/data/train_data/recognition'
+    img_roots = '/data2/zihao.chen/data/train_data/recognition/picture_10/'
     # label_paths = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/label_txt.txt"
     label_paths = '/data2/zihao.chen/data/train_data/recognition/picture_10_old_check_chinese2.txt'
 
