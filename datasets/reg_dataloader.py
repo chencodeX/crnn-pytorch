@@ -26,7 +26,8 @@ from datasets.tools.data_augument import pepper_and_salt, sharpening, gaussian_b
 class OCRDataset(Dataset):
     def __init__(self, img_root, label_path, resize, val=False, dynamic=False):
         super(OCRDataset, self).__init__()
-        self.labels = self.get_labels_new(label_path, img_root)
+        self.simple_chinese = {s: t for s, t in zip(reg_config.TRADITION, reg_config.SIMPLE)}
+        self.labels = self.get_labels_new(label_path, img_root, self.simple_chines)
         self.height, self.width = resize
         self.val = val
         if dynamic:
@@ -50,7 +51,7 @@ class OCRDataset(Dataset):
         return labels
 
     @staticmethod
-    def get_labels_new(label_path, image_path):
+    def get_labels_new(label_path, image_path, simple_chines):
         labels = []
         # label_names = os.listdir(label_path)
         # label_paths = [os.path.join(label_path, file_name) for file_name in label_names]
@@ -61,7 +62,13 @@ class OCRDataset(Dataset):
             temp_lins = file.readlines()
             for line in temp_lins:
                 word = line.decode('utf-8').strip('\n')
-                labels.append({os.path.join(image_path, '%06d.jpg' % (img_index)): word})
+                new_word = ''
+                for char in word:
+                    if char in simple_chines:
+                        new_word += simple_chines[char]
+                    else:
+                        new_word += char
+                labels.append({os.path.join(image_path, '%06d.jpg' % (img_index)): new_word})
                 img_index += 1
         return labels
 
