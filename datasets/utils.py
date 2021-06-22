@@ -100,6 +100,7 @@ class strLabelConverter(object):
             assert t.numel() == length, "text with length: {} does not match declared length: {}".format(t.numel(),
                                                                                                          length)
             if raw:
+                print(t)
                 return ''.join([self.alphabet[i - 1] for i in t])
             else:
                 char_list = []
