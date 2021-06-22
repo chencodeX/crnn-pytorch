@@ -27,7 +27,7 @@ class OCRDataset(Dataset):
     def __init__(self, img_root, label_path, resize, val=False, dynamic=False):
         super(OCRDataset, self).__init__()
         self.simple_chinese = {s: t for s, t in zip(reg_config.TRADITION, reg_config.SIMPLE)}
-        self.labels = self.get_labels_new(label_path, img_root, self.simple_chines)
+        self.labels = self.get_labels_new(label_path, img_root, self.simple_chinese)
         self.height, self.width = resize
         self.val = val
         if dynamic:
