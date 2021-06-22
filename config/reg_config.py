@@ -33,7 +33,7 @@ adadelta = False
 saveInterval = 1000
 valInterval = 400
 n_test_disp = 10
-displayInterval = 10000
+displayInterval = 1000
 val_number = 40
 
 # model parameter

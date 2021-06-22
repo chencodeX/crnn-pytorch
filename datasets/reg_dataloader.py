@@ -78,7 +78,7 @@ class OCRDataset(Dataset):
         file_pdf = open(label_path, 'r', encoding='utf-8')
         pdf_file_texts = file_pdf.readlines()
         np.random.shuffle(pdf_file_texts)
-        for c in tqdm(pdf_file_texts):
+        for c in tqdm(pdf_file_texts[:2000000]):
             word = []
             text = c.strip('\n')
             if not '.jpg' in text:

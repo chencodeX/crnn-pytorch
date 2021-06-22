@@ -20,6 +20,7 @@ import torch.utils.data
 import numpy as np
 import os
 import time
+from tqdm import tqdm
 
 import datasets.utils as utils
 import models.crnn_mv3 as crnn
@@ -99,7 +100,7 @@ def train(crnn, train_loader, criterion, iteration, optimizer, warm_up=False):
     crnn.train()
     loss_avg = utils.averager()
     i_batch = 0
-    for data_40 in train_loader:
+    for data_40 in tqdm(train_loader):
         if warm_up and i_batch % 100 == 0:
             adjust_learning_rate(optimizer, 0, warm_up, batch_idx=i_batch)
         if reg_config.dynamic:
@@ -125,7 +126,7 @@ def train(crnn, train_loader, criterion, iteration, optimizer, warm_up=False):
             writer.add_scalar('Train Loss', loss_avg.val(), iteration * len(train_loader) + i_batch)
             loss_avg.reset()
 
-        if (i_batch + 2) % 1000 == 0:
+        if (i_batch + 2) % 10000 == 0:
             torch.save(crnn.state_dict(), '{0}/{1}_{2}_{3}_{4}.pth'.
                        format(reg_config.experiment, reg_config.model_flag, iteration, i_batch, loss_avg.val()))
         i_batch += 1
