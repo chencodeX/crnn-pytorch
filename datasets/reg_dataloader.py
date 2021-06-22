@@ -144,7 +144,7 @@ class OCRDataset(Dataset):
                 image = cv2.imread(image_name)
                 h, w, c = image.shape
                 # if h > w:
-                image = image.transpose((1, 0, 2))
+                # image = image.transpose((1, 0, 2))
                 if image is None:
                     print(self.labels[ind])
                     ind += 1
