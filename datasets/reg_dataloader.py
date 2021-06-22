@@ -27,7 +27,7 @@ class OCRDataset(Dataset):
     def __init__(self, img_root, label_path, resize, val=False, dynamic=False):
         super(OCRDataset, self).__init__()
         self.simple_chinese = {s: t for s, t in zip(reg_config.TRADITION, reg_config.SIMPLE)}
-        self.labels = self.get_labels_new(label_path, img_root, self.simple_chinese)
+        self.labels = self.get_labels_old(label_path, img_root)
         self.height, self.width = resize
         self.val = val
         if dynamic:
@@ -70,6 +70,24 @@ class OCRDataset(Dataset):
                         new_word += char
                 labels.append({os.path.join(image_path, '%06d.jpg' % (img_index)): new_word})
                 img_index += 1
+        return labels
+
+    @staticmethod
+    def get_labels_old(label_path, image_path):
+        labels = []
+        file_pdf = open(label_path, 'r', encoding='utf-8')
+        pdf_file_texts = file_pdf.readlines()
+        np.random.shuffle(pdf_file_texts)
+        for c in tqdm(pdf_file_texts):
+            word = []
+            text = c.strip('\n')
+            if not '.jpg' in text:
+                continue
+            word.append(text[:text.find('.jpg') + 4])
+            word.append(text[text.find('.jpg') + 5:])
+            word[1] = word[1].replace("。", ".").replace("，", ",").replace("；", ";").replace("：", ":") \
+                .replace("（", "(").replace("）", ")").replace("、", ",")
+            labels.append({os.path.join(image_path, word[0]): word[1]})
         return labels
 
     def __len__(self):
