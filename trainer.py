@@ -156,7 +156,7 @@ def adjust_learning_rate(optimizer, epoch, warmup=False, batch_idx=10000):
         else:
             return
     else:
-        lr_ = reg_config.lr * (0.5 ** (epoch // 10))
+        lr_ = reg_config.lr * (0.5 ** (epoch // 7))
         lr_ = max(lr_, 0.00001)
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr_
@@ -239,10 +239,10 @@ if __name__ == '__main__':
         init.constant_(crnn.lstm_r.lstm_2.embedding[1].bias, 0)
 
     # data loader process
-    # img_roots = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set"
-    img_roots = '/datafaster/zihao.chen/data/train_data/recognition/picture_10'
-    # label_paths = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/label_txt.txt"
-    label_paths = '/data2/zihao.chen/data/train_data/recognition/picture_10_old_check_chinese2.txt'
+    img_roots = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set"
+    # img_roots = '/datafaster/zihao.chen/data/train_data/recognition/picture_10'
+    label_paths = "/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/label_txt.txt"
+    # label_paths = '/data2/zihao.chen/data/train_data/recognition/picture_10_old_check_chinese2.txt'
 
     # store model path
     utils.mk_not_exits_dir(reg_config.experiment)
