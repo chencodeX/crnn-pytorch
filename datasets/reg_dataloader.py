@@ -27,9 +27,11 @@ class OCRDataset(Dataset):
     def __init__(self, img_root, label_path, resize, val=False, dynamic=False):
         super(OCRDataset, self).__init__()
         self.simple_chinese = {s: t for s, t in zip(reg_config.TRADITION, reg_config.SIMPLE)}
-        if not val:
+        if val:
+            self.labels = self.get_labels_new(label_path[1], img_root[1],self.simple_chinese)
+        else:
             self.labels = self.get_labels_old(label_path[0], img_root[0])
-        self.labels = self.labels[:] + self.get_labels_new(label_path[1], img_root[1],self.simple_chinese)
+            self.labels = self.labels[:] + self.get_labels_new(label_path[1], img_root[1],self.simple_chinese)
         np.random.shuffle(self.labels)
         self.height, self.width = resize
         self.val = val
