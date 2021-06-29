@@ -38,7 +38,7 @@ val_number = 40
 
 # model parameter
 beta1 = 0.5
-lr = 0.003
+lr = 0.0003
 warmup = False
 warmup_lr = 0.00003
 warmup_step = 50000
