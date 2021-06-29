@@ -239,9 +239,9 @@ if __name__ == '__main__':
         init.constant_(crnn.lstm_r.lstm_2.embedding[1].bias, 0)
 
     # data loader process
-    img_roots = ["/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set",'/datafaster/zihao.chen/data/train_data/recognition/picture_10']
+    img_roots = ['/datafaster/zihao.chen/data/train_data/recognition/picture_10',"/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/new_set"]
     # img_roots = '/datafaster/zihao.chen/data/train_data/recognition/picture_10'
-    label_paths = ["/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/label_txt.txt",'/data2/zihao.chen/data/train_data/recognition/picture_10_old_check_chinese2.txt']
+    label_paths = ['/data2/zihao.chen/data/train_data/recognition/picture_10_old_check_chinese2.txt',"/datafaster/zihao.chen/data/train_data/datasets_for_CRNN/label_txt.txt"]
     # label_paths = '/data2/zihao.chen/data/train_data/recognition/picture_10_old_check_chinese2.txt'
 
     # store model path
