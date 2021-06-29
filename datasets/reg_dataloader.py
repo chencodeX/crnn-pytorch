@@ -27,8 +27,9 @@ class OCRDataset(Dataset):
     def __init__(self, img_root, label_path, resize, val=False, dynamic=False):
         super(OCRDataset, self).__init__()
         self.simple_chinese = {s: t for s, t in zip(reg_config.TRADITION, reg_config.SIMPLE)}
-        # self.labels = self.get_labels_old(label_path, img_root)
-        self.labels = self.get_labels_new(label_path, img_root,self.simple_chinese)
+        self.labels = self.get_labels_old(label_path[0], img_root[0])
+        self.labels += self.get_labels_new(label_path[1], img_root[1],self.simple_chinese)
+        np.random.shuffle(self.labels)
         self.height, self.width = resize
         self.val = val
         if dynamic:
@@ -79,7 +80,7 @@ class OCRDataset(Dataset):
         file_pdf = open(label_path, 'r', encoding='utf-8')
         pdf_file_texts = file_pdf.readlines()
         np.random.shuffle(pdf_file_texts)
-        for c in tqdm(pdf_file_texts[:200000]):
+        for c in tqdm(pdf_file_texts[:2000000]):
             word = []
             text = c.strip('\n')
             if not '.jpg' in text:
@@ -145,7 +146,8 @@ class OCRDataset(Dataset):
                 image = cv2.imread(image_name)
                 h, w, c = image.shape
                 # if h > w:
-                image = image.transpose((1, 0, 2))[::-1]
+                if 'crnn' not in image_name:
+                    image = image.transpose((1, 0, 2))[::-1]
                 if image is None:
                     print(self.labels[ind])
                     ind += 1
